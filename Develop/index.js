@@ -1,10 +1,12 @@
 // includes packages needed - https://www.npmjs.com/package/inquirer/v/8.2.4
 const inquirer = require("inquirer");
 const fs = require("fs/promises");
+const installList = [];
+let index = 0;
 
 /* the unnamed object is the same as object destructuring "const { variableNames } = objectName" 
-because generateReadme() is being called with answers passed into it*/
-function generateReadme({ getStartedQ, licenseQ, titleQ, descriptionQ, installQ, usageQ, contributionQ, testsQ, usernameQ, emailQ }) {
+because generateReadme() is being called with answers passed into it */
+function generateReadme({ licenseQ, titleQ, descriptionQ, installQ, usageQ, contributionQ, testsQ, usernameQ, emailQ }) {
     return `
 # ${titleQ}
 
@@ -76,65 +78,34 @@ function askReady() {
         });
 }
 
-const installList = [];
-let index = 0;
 function writeInstall() {
-    // while(condition) {
-    //     index++
-    // }
-    // do {
-        index++
-        inquirer
-            .prompt([
-                {
-                    type: "input",
-                    name: `step-${index}`,
-                    message: `Please define Step ${index}.`
-                }
-            ])
-            .then(indexStep =>
-                installList.push(indexStep))
-            .then(() => {
-                console.log(installList)
-                inquirer
-                    .prompt([
-                        {
-                            type: "confirm",
-                            name: "continue",
-                            message: "Do you want to add another step?",
-                            default: false
-                        }
-                    ])
-                    .then(installAddStep => {
-                        installAddStep.continue ? writeInstall(index+1) : "ask other questions??"
-                        // return installAddStep.continue
-                    })
-            })
-    // }
-    // while (installAddStep.continue)
-    // inquirer
-    //     .prompt([
-    //         {
-    //             type: "input",
-    //             name: `index-${index}`,
-    //             message: `Please define Step ${index}.`
-    //         }
-    //     ])
-    //     .then(() => {
-    //         inquirer
-    //             .prompt([
-    //                 {
-    //                     type: "confirm",
-    //                     name: "continue",
-    //                     message: "Do you want to add another step?",
-    //                     default: false
-    //                 }
-    //             ])
-    //             .then(installAddStep => {
-    //                 // installAddStep.continue ? writeInstall : "ask other questions??"
-    //                 return installAddStep.continue
-    //             })
-    //     })
+    index++
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: `step-${index}`,
+                message: `Please define Step ${index}.`
+            }
+        ])
+        .then(indexStep =>
+            installList.push(indexStep))
+        .then(() => {
+            console.log(installList)
+            inquirer
+                .prompt([
+                    {
+                        type: "confirm",
+                        name: "continue",
+                        message: "Do you want to add another step?",
+                        default: false
+                    }
+                ])
+                .then(installAddStep => {
+                    installAddStep.continue ? writeInstall() : "ask other questions??"
+                    // return installAddStep.continue
+                })
+        })
 }
 
 function askInstall() {
