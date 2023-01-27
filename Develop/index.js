@@ -6,7 +6,7 @@ let index = 0;
 
 /* the unnamed object is the same as object destructuring "const { variableNames } = objectName" 
 because generateReadme() is being called with answers passed into it */
-function generateReadme({ licenseQ, titleQ, descriptionQ, installQ, usageQ, contributionQ, testsQ, usernameQ, emailQ }) {
+function generateReadme({ licenseQ, titleQ, descriptionQ, usageQ, contributionQ, testsQ, usernameQ, emailQ }, installList) {
     return `
 # ${titleQ}
 
@@ -25,7 +25,7 @@ function generateReadme({ licenseQ, titleQ, descriptionQ, installQ, usageQ, cont
 
 ## Installation
 
-    ${installQ}
+    ${installList}
 
 
 ## Usage
@@ -67,7 +67,7 @@ function askReady() {
             }
         ])
         .then((answer) => {
-            answer.getStartedQ ? collectResponses() : console.log("Prompt exited.")
+            answer.getStartedQ ? askInstall() : console.log("Prompt exited.")
         })
         .catch((error) => {
             if (error.isTtyError) {
@@ -102,14 +102,14 @@ function writeInstall() {
                     }
                 ])
                 .then(installAddStep => {
-                    installAddStep.continue ? writeInstall() : "ask other questions??"
+                    installAddStep.continue ? writeInstall() : collectResponses()
                     // return installAddStep.continue
                 })
         })
 }
 
 function askInstall() {
-    const installationSteps = [];
+    // const installationSteps = [];
     inquirer
         .prompt([
             {
@@ -128,29 +128,21 @@ function askInstall() {
                         message: `What are the steps required to install your project? Provide step-by-step instructions of how to get the development environment running in one block of text.`
                     }
                 ])
+                .then(installBlock => {
+                    installList.push(installBlock)
+                    console.log(installList)
+                    const newReadme = generateReadme(installList);
+                    writeToFile(newReadme)
+                    // return installBlock
+                })
+                // example below
+                // .then((answers) => {
+                //     // console.log(answers)
+                //     const newReadme = generateReadme(answers, installList);
+                //     writeToFile(newReadme)
+                // })
         })
 }
-askInstall()
-
-// let installArr = []
-
-// function installSteps(input) {
-//     let index = 0;
-//     while (input === true) {
-//         index++
-//         inquirer.prompt([
-//             {
-//                 type: 'input',
-//                 name: `install-${index}`,
-//                 message: 'Which step do you want to take?'
-//             }
-//         ])
-//             .then(data => {
-//                 installArr.push(data)
-//             })
-//     }
-// }
-
 
 function collectResponses() {
     inquirer
@@ -210,14 +202,13 @@ function collectResponses() {
                 message: `How would you describe this project?
             (Hint: your motivation, why create this, solving which problem(s), things learned)`
             },
-            {
-                type: "input",
-                name: "installQ",
-                message: `What are the steps required to install your project?
-                Provide step-by-step instructions of how to get the development environment running.`
-                // `What are the steps required to install your project?
-                // Provide step-by-step instructions of how to get the development environment running.`
-            },
+            // {
+            //     type: "input",
+            //     name: "installQ",
+            //     message: askInstall()
+            //     // message: `What are the steps required to install your project?
+            //     // Provide step-by-step instructions of how to get the development environment running.`
+            // },
             {
                 type: "input",
                 name: "usageQ",
@@ -249,12 +240,8 @@ function collectResponses() {
         ])
         .then((answers) => {
             // console.log(answers)
-            // console.log(installArr)
-            const newReadme = generateReadme(answers);
+            const newReadme = generateReadme(answers, installList);
             writeToFile(newReadme)
-            // fs.writeFile("README.md", newReadme)
-            //     .then(() => console.log("README saved!"))
-            //     .catch(error => `An error occurred: ${error}`);
         })
         .catch((error) => {
             if (error.isTtyError) {
@@ -281,7 +268,8 @@ function writeToFile(newReadme) {
 
 // TODO: Create a function to initialize app
 function init() {
-    // askReady();
+    askReady();
+    // askInstall()
 }
 
 // Function call to initialize app
