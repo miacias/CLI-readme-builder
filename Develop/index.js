@@ -1,5 +1,55 @@
 // includes packages needed - https://www.npmjs.com/package/inquirer/v/8.2.4
 const inquirer = require("inquirer");
+const fs = require("fs/promises");
+
+/* the unnamed object is the same as object destructuring "const { variableNames } = objectName" 
+because generateReadme() is being called with answers passed into it*/
+function generateReadme({getStartedQ, licenseQ, titleQ, descriptionQ, installQ, usageQ, contributionQ, testsQ, usernameQ, emailQ}) {
+    return `# ${titleQ}
+    
+    ## Description
+    
+    ${descriptionQ}
+    
+    
+    ## Table of Contents
+    - [Installation](#installation)
+    - [Usage](#usage)
+    - [Contribution](#contribution)
+    - [Tests](#tests)
+    - [Contact](#contact)
+    - [License](#license)
+    
+    ## Installation
+
+    ${installQ}
+    
+    
+    ## Usage
+
+    ${usageQ}
+    
+
+    ## Contribution
+
+    ${contributionQ}
+    
+    
+    ## Tests
+
+    ${testsQ}
+    
+    
+    ## Contact
+    - creator: [${usernameQ}](https://github.com/${usernameQ})
+    - email: [${emailQ}](mailto:${emailQ})
+
+
+    ## License
+
+    ${licenseQ}
+    `
+}
 
 console.log('Hi, welcome to your Node README Builder!');
 
@@ -12,42 +62,42 @@ const questions = [
         default: false
     },
     {
-        type: "checkbox",
+        type: "list",
         name: "licenseQ",
         message: "What license is protecting this repository?",
         choices: [
-            {name: "Academic Free License v3.0"}, 
-            {name: "Apache license 2.0"}, 
-            {name: "Artistic license 2.0"}, 
-            {name: "Boost Software License 1.0"}, 
-            {name: "BSD 2-clause \"Simplified\" license"}, 
-            {name: "BSD 3-clause \"New\" or \"Revised\" license"}, 
-            {name: "BSD 3-clause Clear license"}, 
-            {name: "Creative Commons license family"}, 
-            {name: "Creative Commons Zero v1.0 Universal"}, 
-            {name: "Creative Commons Attribution 4.0"}, 
-            {name: "Creative Commons Attribution Share Alike 4.0"}, 
-            {name: "Do What The F*ck You Want To Public License"}, 
-            {name: "Educational Community License v2.0"}, 
-            {name: "Eclipse Public License 1.0"}, 
-            {name: "Eclipse Public License 2.0"}, 
-            {name: "European Union Public License 1.1"}, 
-            {name: "GNU General Public License family"}, 
-            {name: "GNU General Public License v2.0"}, 
-            {name: "GNU General Public License v3.0"}, 
-            {name: "GNU Lesser General Public License v2.1"}, 
-            {name: "GNU Lesser General Public License v3.0"}, 
-            {name: "ISC"}, 
-            {name: "LaTeX Project Public License v1.3c"}, 
-            {name: "Microsoft Public License"}, 
-            {name: "MIT"}, 
-            {name: "Mozilla Public License 2.0"}, 
-            {name: "Open Software License 3.0"}, 
-            {name: "PostgreSQL License"}, 
-            {name: "SIL Open Font License 1.1"}, 
-            {name: "University of Illinois/NCSA Open Source License"}, 
-            {name: "The Unlicense"}, 
-            {name: "zLib License"}],
+            "Academic Free License v3.0", 
+            "Apache license 2.0", 
+            "Artistic license 2.0", 
+            "Boost Software License 1.0", 
+            "BSD 2-clause \"Simplified\" license", 
+            "BSD 3-clause \"New\" or \"Revised\" license", 
+            "BSD 3-clause Clear license", 
+            "Creative Commons license family", 
+            "Creative Commons Zero v1.0 Universal", 
+            "Creative Commons Attribution 4.0", 
+            "Creative Commons Attribution Share Alike 4.0", 
+            "Do What The F*ck You Want To Public License", 
+            "Educational Community License v2.0", 
+            "Eclipse Public License 1.0", 
+            "Eclipse Public License 2.0", 
+            "European Union Public License 1.1", 
+            "GNU General Public License family", 
+            "GNU General Public License v2.0", 
+            "GNU General Public License v3.0", 
+            "GNU Lesser General Public License v2.1", 
+            "GNU Lesser General Public License v3.0", 
+            "ISC", 
+            "LaTeX Project Public License v1.3c", 
+            "Microsoft Public License", 
+            "MIT", 
+            "Mozilla Public License 2.0", 
+            "Open Software License 3.0", 
+            "PostgreSQL License", 
+            "SIL Open Font License 1.1", 
+            "University of Illinois/NCSA Open Source License", 
+            "The Unlicense", 
+            "zLib License"],
         validate(answer) {
             if (answer.length < 1) {
                 return "You must choose at least one license.";
@@ -107,7 +157,10 @@ inquirer
     questions
   ])
   .then((answers) => {
-    // Use user feedback for... whatever!!
+    const newReadme = generateReadme(answers);
+    fs.writeFile("README.md", newReadme)
+        .then(() => console.log("README saved!"))
+        .catch(error => `An error occurred: ${error}`);
   })
   .catch((error) => {
     if (error.isTtyError) {
