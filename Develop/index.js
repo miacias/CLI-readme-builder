@@ -5,56 +5,57 @@ const fs = require("fs/promises");
 /* the unnamed object is the same as object destructuring "const { variableNames } = objectName" 
 because generateReadme() is being called with answers passed into it*/
 function generateReadme({getStartedQ, licenseQ, titleQ, descriptionQ, installQ, usageQ, contributionQ, testsQ, usernameQ, emailQ}) {
-    return `# ${titleQ}
-    
-    ## Description
-    
+    return `
+# ${titleQ}
+
+## Description
+
     ${descriptionQ}
-    
-    
-    ## Table of Contents
-    - [Installation](#installation)
-    - [Usage](#usage)
-    - [Contribution](#contribution)
-    - [Tests](#tests)
-    - [Contact](#contact)
-    - [License](#license)
-    
-    ## Installation
+
+
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contribution](#contribution)
+- [Tests](#tests)
+- [Contact](#contact)
+- [License](#license)
+
+## Installation
 
     ${installQ}
-    
-    
-    ## Usage
+
+
+## Usage
 
     ${usageQ}
-    
 
-    ## Contribution
+
+## Contribution
 
     ${contributionQ}
-    
-    
-    ## Tests
+
+
+## Tests
 
     ${testsQ}
-    
-    
-    ## Contact
-    - creator: [${usernameQ}](https://github.com/${usernameQ})
-    - email: [${emailQ}](mailto:${emailQ})
 
 
-    ## License
+## Contact
+- creator: [${usernameQ}](https://github.com/${usernameQ})
+- email: [${emailQ}](mailto:${emailQ})
+
+
+## License
 
     ${licenseQ}
     `
 }
 
-console.log('Hi, welcome to your Node README Builder!');
+console.log('Hi, welcome to your CLI README Builder via Node.js!');
 
-// an array of questions for user input
-const questions = [
+inquirer
+  .prompt([
     {
         type: "confirm",
         name: "getStartedQ",
@@ -150,17 +151,13 @@ const questions = [
         name: "emailQ",
         message: `What is your contact email address?`
     }
-];
-
-inquirer
-  .prompt([
-    questions
   ])
   .then((answers) => {
     const newReadme = generateReadme(answers);
-    fs.writeFile("README.md", newReadme)
-        .then(() => console.log("README saved!"))
-        .catch(error => `An error occurred: ${error}`);
+    writeToFile(newReadme)
+    // fs.writeFile("README.md", newReadme)
+    //     .then(() => console.log("README saved!"))
+    //     .catch(error => `An error occurred: ${error}`);
   })
   .catch((error) => {
     if (error.isTtyError) {
@@ -176,8 +173,12 @@ inquirer
 // const optTestsQ = `Optional: Do you want to include how to test your code?`;
 
 
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+// writes README file
+function writeToFile(newReadme) {
+    fs.writeFile("README.md", newReadme)
+    .then(() => console.log("README saved!"))
+    .catch(error => `An error occurred: ${error}`);
+}
 
 // TODO: Create a function to initialize app
 function init() {}
