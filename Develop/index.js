@@ -1,10 +1,9 @@
-// TODO: Include packages needed for this application
-// https://www.npmjs.com/package/inquirer/v/8.2.4
+// includes packages needed - https://www.npmjs.com/package/inquirer/v/8.2.4
 const inquirer = require("inquirer");
 
 console.log('Hi, welcome to your Node README Builder!');
 
-// TODO: Create an array of questions for user input
+// an array of questions for user input
 const questions = [
     {
         type: "confirm",
@@ -120,22 +119,9 @@ inquirer
 
 // const getStartedQ = "Ready to begin building your README?";
 // const optContributionQ = `Optional: Do you want to include open source contributions code of conduct?`;
-// const contributionQ = `How would you like to ask other developers to contribute?
-// (Hint: Use this syntax \" [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)\"
-//  to add reference to Contributor Covenant.)`;
 // const optEmailQ = `Optional: Do you want to include your contact email address?`;
-// const emailQ = `What is your contact email address?`;
 // const optTestsQ = `Optional: Do you want to include how to test your code?`;
-// const testsQ = `Go the extra mile and write tests for your application, and provide examples on how to run them.`;
-// const titleQ = `What would you like to name this project?`;
-// const descriptionQ = `How would you describe this project?
-// (Hint: motivation, why, solving which problem(s), things learned)`;
-// const installQ = `What are the steps required to install your project?
-// Provide step-by-step instructions of how to get the development environment running.`;
-// const usageQ = `Provide instructions and examples for use. Include screenshots as needed.
-// (Hint: Use this syntax \"![alt text](assets/images/screenshot.png)\" to add an image.)`;
-// const licenseQ = `What license is protecting this repository?`;
-// const usernameQ = `What is your GitHub username?`;
+
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {}
