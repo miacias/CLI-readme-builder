@@ -1,8 +1,8 @@
-# a
+# name
 
 ## Description
 
-  a
+  stuff
 
 
 ## Table of Contents
@@ -15,29 +15,34 @@
 
 ## Installation
   
-a
+blob
 
 
 
 ## Usage
 
-  a
+  use
 
 
 ## Contribution
 
-  a
+  money
 
 
 ## Tests
 
-  a
+  testing
 
 
 ## Contact
-  - creator's GitHub: [a](https://github.com/a)
-  - email: [a](mailto:a)
+  - creator's GitHub: [miacias](https://github.com/miacias)
+  - email: [miaciasullo@gmail.com](mailto:miaciasullo@gmail.com)
 
 
 ## License
-  undefined
+  
+Academic Free License v3.0
+![License](https://img.shields.io/badge/license-Academic_Free_License_v3.0-blue?logo=github)(https://github.com/miacias/name/blob/main/LICENSE)
+
+
+![GitHub](https://img.shields.io/github/license/miacias/coding-portfolio?color=blue&logo=github)

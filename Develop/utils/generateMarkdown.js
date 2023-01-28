@@ -1,15 +1,13 @@
-// TODO: Create a function that returns a license badge based on which license is passed in
-// If there is no license, return an empty string
-
+// returns a license badge or an empty string
 //badges here https://shields.io/category/license
 function renderLicenseBadge(licenseQ) {
   // const licenseCode = [];
   if (licenseQ !== "none (no license)") {
-    return `[!License](https://img.shields.io/badge/license-${licenseQ}-blue)`
+    let licenseBadge = licenseQ.split(" ").join("_");
+    return `![License](https://img.shields.io/badge/license-${licenseBadge}-blue?logo=github)`
   } else {
     return "";
   }
-  licenseQ !== "none (no license)" ? licenseCode.push(licenseQ) : "";
   // switch (licenseQ) {
   //   case "Academic Free License v3.0" :
   //     licenseCode.push("");
@@ -60,20 +58,22 @@ function renderLicenseBadge(licenseQ) {
   // }
 }
 
-// TODO: Create a function that returns the license link
-// If there is no license, return an empty string
-function renderLicenseLink(licenseQ) {
+// returns a license link or an empty string
+function renderLicenseLink(licenseQ, usernameQ, titleQ) {
   if (licenseQ !== "none (no license)") {
-    return
+    titleQ.split(" ").join("-");
+    return `(https://github.com/${usernameQ}/${titleQ}/blob/main/LICENSE)`
+  } else {
+    return "";
   }
 }
 
 // TODO: Create a function that returns the license section of README
 // If there is no license, return an empty string
-function renderLicenseSection(licenseQ) {
-  `
+function renderLicenseSection(licenseQ, usernameQ, titleQ) {
+return `
 ${licenseQ}
-[!License](https://img.shields.io/badge/license-${renderLicenseBadge(licenseQ)}-blue)()`
+${renderLicenseBadge(licenseQ)}${renderLicenseLink(licenseQ, usernameQ, titleQ)}`
 }
 
 // gets each step separately
@@ -90,10 +90,6 @@ function getInstallSteps(installList) {
   }
   return listItem;
 }
-
-/*
- make a function that 
-*/
 
 function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, contributionQ, testsQ, usernameQ, emailQ }, installList) {
   return `# ${titleQ}
@@ -136,7 +132,7 @@ function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, contribution
 
 
 ## License
-  ${renderLicenseSection()}
+  ${renderLicenseSection(licenseQ, usernameQ, titleQ)}
 `
 }
 
