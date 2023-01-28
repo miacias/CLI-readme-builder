@@ -45,7 +45,7 @@ function getInstallSteps(installList) {
   return listItem;
 }
 
-function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, contributionQ, testsQ, usernameQ, emailQ }, installList) {
+function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, usageImgQ, contributionQ, testsQ, usernameQ, emailQ }, installList) {
   return `# ${titleQ}
 
 ## Description
@@ -68,6 +68,8 @@ function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, contribution
 ## Usage
 
   ${usageQ}
+
+  ${usageImgQ}
 
 
 ## Contribution
