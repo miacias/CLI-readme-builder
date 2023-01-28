@@ -134,7 +134,7 @@ function collectResponses() {
             {
                 type: "input",
                 name: "titleQ",
-                message: "What would you like to name this project?"
+                message: "What would you like to name this repository?"
             },
             {
                 type: "input",
