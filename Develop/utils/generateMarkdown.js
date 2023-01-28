@@ -21,9 +21,13 @@ function renderLicenseLink(licenseQ, usernameQ, titleQ) {
 
 // returns the license section of README or an empty string
 function renderLicenseSection(licenseQ, usernameQ, titleQ) {
-return `
+  if (licenseQ !== "none (no license)") {
+    return `
 ${licenseQ}
-[${renderLicenseBadge(licenseQ)}]${renderLicenseLink(licenseQ, usernameQ, titleQ)}`
+[${renderLicenseBadge(licenseQ)}]${renderLicenseLink(licenseQ, usernameQ, titleQ)}`;
+  } else {
+    return "none";
+  }
 }
 
 // gets each step separately
