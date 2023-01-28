@@ -84,10 +84,7 @@ function askInstall() {
                 ])
                 .then(installBlock => {
                     installList.push(installBlock)
-                    console.log(installList)
-                    const newReadme = generateReadme(installList);
-                    writeToFile(newReadme)
-                    // return installBlock
+                    collectResponses()
                 })
         })
 }
