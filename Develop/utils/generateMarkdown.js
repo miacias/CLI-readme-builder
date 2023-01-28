@@ -49,19 +49,22 @@ function getInstallSteps(installList) {
 // gets the usage and usage screenshot separately
 function getUsage(usageList) {
   let usageItem = `\n`
+  const usageIfo = usageList[0]
+  const {usageQ, usageImgQ} = usageIfo
+  usageItem += `${usageQ}\n${usageImgQ}`
   // opens the array and exposes the object within
-  for (const object in usageList) {
-    const usageInfo = usageList[object]
-    console.log(usageInfo)
+  // for (const object in usageList) {
+  //   const usageInfo = usageList[object]
+  //   console.log(usageInfo)
   //   // opens the object and extracts each string
   //   for (const string in usageInfo) {
   //     const usage = usageInfo[string]
   //     usageItem += `${usage}\n`
   //   }
-  }
+  // }
   // const usage = usageInfo[usageQ]
 
-  console.log(usageItem)
+  // console.log(usageItem)
   return usageItem;
 }
 

@@ -102,7 +102,7 @@ function writeUsage() {
             },
             {
                 type: "input",
-                name: "usageImageQ",
+                name: "usageImgQ",
                 message: `Include screenshots as needed.
 (Hint 1: Use this syntax \"![alt text](assets/images/screenshot.png)\" to add an image.)
 (Hint 2: No screenshots? Write an empty string like this: \"\")`
