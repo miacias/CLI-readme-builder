@@ -61,6 +61,39 @@ function renderLicenseLink(license) {}
 function renderLicenseSection(license) {}
 
 // TODO: Create a function to generate markdown for README
+function parse(installList) {
+  for (const object in installList) {
+    const stepObject = installList[object]
+    for (const step in stepObject) {
+      const stepValue = stepObject[step]
+      console.log(stepValue)
+      console.log(JSON.stringify(stepValue))
+    }
+    // if(installList.hasOwnProperty(listName)) {
+    //   let listValue = installList[listName];
+    //   console.log(JSON.stringify(listValue))
+    // }
+  }
+  // installList.forEach(element => {
+  //   JSON.stringify(element)
+  //   console.log(JSON.stringify(element))
+  // });
+  // let index = 0;
+  installArr = [];
+  // for (let i = 0; i < installList.length; i++) {
+    
+  //   index++
+    // console.log(index)
+    // console.log(i)
+    // console.log(typeof (installList[i].step-[index]))
+    // console.log(JSON.stringify(installList[i].step-[index]))
+    // console.log(JSON.stringify(installList[i]))
+
+    // installArr.push(JSON.stringify(installList[i].step-[index]))
+
+  // }
+  return installArr;
+}
 
 function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, contributionQ, testsQ, usernameQ, emailQ }, installList) {
   return `# ${titleQ}
@@ -81,6 +114,7 @@ function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, contribution
 ## Installation
 
   ${installList}
+  ${parse(installList)}
 
 
 ## Usage

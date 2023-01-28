@@ -35,8 +35,8 @@ function writeInstall() {
         .prompt([
             {
                 type: "input",
-                name: `step-${index}`,
-                message: `Please define Step ${index}.`
+                name: `step${index}`,
+                message: `Please define Step ${index}.`,
             }
         ])
         .then(indexStep =>
@@ -54,6 +54,10 @@ function writeInstall() {
                 ])
                 .then(installAddStep => {
                     installAddStep.continue ? writeInstall() : collectResponses()
+                    /* 
+                    write a function that uses param/arg of installList and parses it
+                    pass installList again to collectResponses()
+                    */
                     // return installAddStep.continue
                 })
         })
@@ -125,7 +129,8 @@ function collectResponses() {
                     "SIL Open Font License 1.1",
                     "University of Illinois/NCSA Open Source License",
                     "The Unlicense",
-                    "zLib License"],
+                    "zLib License",
+                    "none (no license)"],
                 validate(answer) {
                     if (answer.length < 1) {
                         return "You must choose at least one license.";
