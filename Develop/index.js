@@ -3,10 +3,13 @@ const inquirer = require("inquirer");
 const fs = require("fs/promises");
 const generateMarkdown = require("./utils/generateMarkdown.js");
 const installList = [];
+const usageList = [];
 let index = 0;
 
+// starting message
 console.log('Hi, welcome to your CLI README Builder via Node.js!');
 
+// confirms if user wants to begin (prevents overwriting previous work, if any)
 function askReady() {
     inquirer
         .prompt([
@@ -29,6 +32,7 @@ function askReady() {
         });
 }
 
+// user writes installation steps one by one in list form
 function writeInstall() {
     index++
     inquirer
@@ -53,11 +57,12 @@ function writeInstall() {
                     }
                 ])
                 .then(installAddStep => {
-                    installAddStep.continue ? writeInstall() : collectResponses()
+                    installAddStep.continue ? writeInstall() : writeUsage()
                 })
         });
 }
 
+// user is provided option to write installation in paragraph or list form
 function askInstall() {
     inquirer
         .prompt([
@@ -80,11 +85,35 @@ function askInstall() {
                 ])
                 .then(installBlock => {
                     installList.push(installBlock)
-                    collectResponses()
+                    writeUsage()
                 })
         });
 }
 
+// user writes instructions for use and provides screenshots
+function writeUsage() {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "usageQ",
+                message: `Provide instructions for use.`
+            },
+            {
+                type: "input",
+                name: "usageImageQ",
+                message: `Include screenshots as needed.
+(Hint 1: Use this syntax \"![alt text](assets/images/screenshot.png)\" to add an image.)
+(Hint 2: No screenshots? Write an empty string like this: \"\")`
+            }
+        ])
+        .then(usageBlock => {
+            usageList.push(usageBlock);
+            collectResponses();
+        })
+}
+
+// user completes the rest of the prompt questions
 function collectResponses() {
     inquirer
         .prompt([
@@ -142,12 +171,12 @@ function collectResponses() {
                 message: `How would you describe this project?
 (Hint: your motivation, why create this, solving which problem(s), things learned)`
             },
-            {
-                type: "input",
-                name: "usageQ",
-                message: `Provide instructions and examples for use. Include screenshots as needed.
-(Hint: Use this syntax \"![alt text](assets/images/screenshot.png)\" to add an image.)`
-            },
+//             {
+//                 type: "input",
+//                 name: "usageQ",
+//                 message: `Provide instructions and examples for use. Include screenshots as needed.
+// (Hint: Use this syntax \"![alt text](assets/images/screenshot.png)\" to add an image.)`
+//             },
             {
                 type: "input",
                 name: "contributionQ",
@@ -186,15 +215,15 @@ function collectResponses() {
 
 // writes README file
 function writeToFile(newReadme) {
-    fs.writeFile("README.md", newReadme)
+    fs.writeFile("../new-README.md", newReadme)
         .then(() => console.log("README saved!"))
         .catch(error => `An error occurred: ${error}`);
 }
 
-// TODO: Create a function to initialize app
+// lists app function(s) on initialization
 function init() {
     askReady();
 }
 
-// Function call to initialize app
+// initializes app
 init();

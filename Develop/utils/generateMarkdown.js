@@ -24,6 +24,7 @@ function renderLicenseSection(licenseQ, usernameQ, titleQ) {
   if (licenseQ !== "none (no license)") {
     return `
 ${licenseQ}
+
 [${renderLicenseBadge(licenseQ)}]${renderLicenseLink(licenseQ, usernameQ, titleQ)}`;
   } else {
     return "none";
@@ -45,7 +46,23 @@ function getInstallSteps(installList) {
   return listItem;
 }
 
-function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, usageImgQ, contributionQ, testsQ, usernameQ, emailQ }, installList) {
+// gets the usage and usage screenshot separately
+function getUsage(usageList) {
+  let usageItem = `\n`
+  // opens the array and exposes the objects within
+  for (const object in usageList) {
+    const usageInfo = usageList[object]
+    // opens the object and extracts each string
+    for (const string in usageInfo) {
+      const usage = usageInfo[string]
+      usageItem += `${usage}\n`
+    }
+  }
+  console.log(usageItem)
+  return usageItem;
+}
+
+function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, usageImgQ, contributionQ, testsQ, usernameQ, emailQ }, installList, usageList) {
   return `# ${titleQ}
 
 ## Description
@@ -67,9 +84,7 @@ function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, usageImgQ, c
 
 ## Usage
 
-  ${usageQ}
-
-  ${usageImgQ}
+  ${getUsage(usageList)}
 
 
 ## Contribution
