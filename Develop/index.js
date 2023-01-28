@@ -108,7 +108,9 @@ function writeUsage() {
             }
         ])
         .then(usageBlock => {
+            console.log(usageBlock)
             usageList.push(usageBlock);
+            console.log(usageList)
             collectResponses();
         })
 }

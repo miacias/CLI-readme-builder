@@ -49,6 +49,7 @@ function getInstallSteps(installList) {
 // gets the usage and usage screenshot separately
 function getUsage(usageList) {
   let usageItem = `\n`
+  console.log(usageList)
   // opens the array and exposes the objects within
   for (const object in usageList) {
     const usageInfo = usageList[object]
@@ -62,7 +63,7 @@ function getUsage(usageList) {
   return usageItem;
 }
 
-function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, usageImgQ, contributionQ, testsQ, usernameQ, emailQ }, installList, usageList) {
+function generateMarkdown({ licenseQ, titleQ, descriptionQ, /*usageQ, usageImgQ,*/ contributionQ, testsQ, usernameQ, emailQ }, installList, usageList) {
   return `# ${titleQ}
 
 ## Description
@@ -98,7 +99,7 @@ function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, usageImgQ, c
 
 
 ## Contact
-  - creator's GitHub: [${usernameQ}](https://github.com/${usernameQ})
+  - creator: [${usernameQ}](https://github.com/${usernameQ})
   - email: [${emailQ}](mailto:${emailQ})
 
 
