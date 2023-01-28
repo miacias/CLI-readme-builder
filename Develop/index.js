@@ -1,12 +1,16 @@
-// includes packages needed - https://www.npmjs.com/package/inquirer/v/8.2.4
+// imports packages and functions needed
 const inquirer = require("inquirer");
 const fs = require("fs/promises");
 const generateMarkdown = require("./utils/generateMarkdown.js");
+
+// global variables not held locally due to using recursion instead of a loop in function writeInstall()
 const installList = [];
 let index = 0;
 
+// starting message
 console.log('Hi, welcome to your CLI README Builder via Node.js!');
 
+// confirms if user wants to begin (prevents overwriting previous work, if any)
 function askReady() {
     inquirer
         .prompt([
@@ -22,13 +26,14 @@ function askReady() {
         })
         .catch((error) => {
             if (error.isTtyError) {
-                // Prompt couldn't be rendered in the current environment
+                console.log("Prompt couldn't be rendered in the current environment");
             } else {
-                // Something else went wrong
+                console.log("Something went wrong");
             }
         });
 }
 
+// user writes installation steps one by one in list form
 function writeInstall() {
     index++
     inquirer
@@ -53,11 +58,13 @@ function writeInstall() {
                     }
                 ])
                 .then(installAddStep => {
-                    installAddStep.continue ? writeInstall() : collectResponses()
+                    // uses recursion to add a step and increment index OR moves forward to new prompts
+                    installAddStep.continue ? writeInstall() : writeUsage()
                 })
         });
 }
 
+// user is provided option to write installation in paragraph or list form
 function askInstall() {
     inquirer
         .prompt([
@@ -79,13 +86,40 @@ function askInstall() {
                     }
                 ])
                 .then(installBlock => {
+                    // pushes answers into a globally-scoped array for later use
                     installList.push(installBlock)
-                    collectResponses()
+                    writeUsage()
                 })
         });
 }
 
-function collectResponses() {
+// user writes instructions for use and provides screenshots
+function writeUsage() {
+    const usageList = [];
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "usageQ",
+                message: `Provide instructions for use.`
+            },
+            {
+                type: "input",
+                name: "usageImgQ",
+                message: `Include screenshots as needed.
+(Hint 1: Use this syntax \"![alt text](assets/images/screenshot.png)\" to add an image.)
+(Hint 2: No screenshots? Write an empty string like this: \"\")`
+            }
+        ])
+        .then(usageBlock => {
+            // pushes answers into an array to be threaded into the next function for later use
+            usageList.push(usageBlock);
+            collectResponses(usageList);
+        })
+}
+
+// user completes the rest of the prompt questions
+function collectResponses(usageList) {
     inquirer
         .prompt([
             {
@@ -144,12 +178,6 @@ function collectResponses() {
             },
             {
                 type: "input",
-                name: "usageQ",
-                message: `Provide instructions and examples for use. Include screenshots as needed.
-(Hint: Use this syntax \"![alt text](assets/images/screenshot.png)\" to add an image.)`
-            },
-            {
-                type: "input",
                 name: "contributionQ",
                 message: `How would you like to ask other developers to contribute?
 (Hint: Use this syntax \" [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)\" to add reference to Contributor Covenant.)`
@@ -171,30 +199,24 @@ function collectResponses() {
             }
         ])
         .then((answers) => {
-            // console.log(answers)
-            const newReadme = generateMarkdown(answers, installList);
+            const newReadme = generateMarkdown(answers, installList, usageList);
             writeToFile(newReadme)
         })
         .catch((error) => {
             if (error.isTtyError) {
-                // Prompt couldn't be rendered in the current environment
+                console.log("Prompt couldn't be rendered in the current environment");
             } else {
-                // Something else went wrong
+                console.log("Something went wrong");
             }
         });
 }
 
-// writes README file
+// saves completed README file to root directory
 function writeToFile(newReadme) {
-    fs.writeFile("README.md", newReadme)
+    fs.writeFile("../new-README.md", newReadme)
         .then(() => console.log("README saved!"))
         .catch(error => `An error occurred: ${error}`);
 }
 
-// TODO: Create a function to initialize app
-function init() {
-    askReady();
-}
-
-// Function call to initialize app
-init();
+// initializes CLI README builder app
+askReady();

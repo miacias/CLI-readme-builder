@@ -24,6 +24,7 @@ function renderLicenseSection(licenseQ, usernameQ, titleQ) {
   if (licenseQ !== "none (no license)") {
     return `
 ${licenseQ}
+
 [${renderLicenseBadge(licenseQ)}]${renderLicenseLink(licenseQ, usernameQ, titleQ)}`;
   } else {
     return "none";
@@ -45,7 +46,19 @@ function getInstallSteps(installList) {
   return listItem;
 }
 
-function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, usageImgQ, contributionQ, testsQ, usernameQ, emailQ }, installList) {
+// gets the usage and usage screenshot separately
+function getUsage(usageList) {
+  let usageItem = `\n`
+  const usageIfo = usageList[0]
+  const {usageQ, usageImgQ} = usageIfo
+  // pushes each string from the object into usageItem template literal
+  usageItem += `${usageQ}\n
+${usageImgQ}`
+  return usageItem;
+}
+
+// uses a template literal to import all variables into a README.md format
+function generateMarkdown({ licenseQ, titleQ, descriptionQ, contributionQ, testsQ, usernameQ, emailQ }, installList, usageList) {
   return `# ${titleQ}
 
 ## Description
@@ -67,9 +80,7 @@ function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, usageImgQ, c
 
 ## Usage
 
-  ${usageQ}
-
-  ${usageImgQ}
+  ${getUsage(usageList)}
 
 
 ## Contribution
@@ -83,7 +94,7 @@ function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, usageImgQ, c
 
 
 ## Contact
-  - creator's GitHub: [${usernameQ}](https://github.com/${usernameQ})
+  - creator: [${usernameQ}](https://github.com/${usernameQ})
   - email: [${emailQ}](mailto:${emailQ})
 
 
@@ -92,4 +103,5 @@ function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, usageImgQ, c
 `
 }
 
+// exports the README.md formatted data to index.js
 module.exports = generateMarkdown;
