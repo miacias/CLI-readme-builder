@@ -1,7 +1,7 @@
 // includes packages needed - https://www.npmjs.com/package/inquirer/v/8.2.4
 const inquirer = require("inquirer");
 const fs = require("fs/promises");
-const generateMarkdown = require("./utils/generateMarkdown.js")
+const generateMarkdown = require("./utils/generateMarkdown.js");
 const installList = [];
 let index = 0;
 
@@ -18,7 +18,7 @@ function askReady() {
             }
         ])
         .then((answer) => {
-            answer.getStartedQ ? askInstall() : console.log("Prompt exited.")
+            answer.getStartedQ ? askInstall() : console.log("Prompt exited successfully.")
         })
         .catch((error) => {
             if (error.isTtyError) {
@@ -54,13 +54,8 @@ function writeInstall() {
                 ])
                 .then(installAddStep => {
                     installAddStep.continue ? writeInstall() : collectResponses()
-                    /* 
-                    write a function that uses param/arg of installList and parses it
-                    pass installList again to collectResponses()
-                    */
-                    // return installAddStep.continue
                 })
-        })
+        });
 }
 
 function askInstall() {
@@ -79,14 +74,15 @@ function askInstall() {
                     {
                         type: "input",
                         name: "singleInstall",
-                        message: `What are the steps required to install your project? Provide step-by-step instructions of how to get the development environment running in one block of text.`
+                        message: `In one block of text, what are the steps required to install your project? 
+(Hint: step-by-step instructions of how to get the development environment running)`
                     }
                 ])
                 .then(installBlock => {
                     installList.push(installBlock)
                     collectResponses()
                 })
-        })
+        });
 }
 
 function collectResponses() {
@@ -144,27 +140,19 @@ function collectResponses() {
                 type: "input",
                 name: "descriptionQ",
                 message: `How would you describe this project?
-            (Hint: your motivation, why create this, solving which problem(s), things learned)`
+(Hint: your motivation, why create this, solving which problem(s), things learned)`
             },
-            // {
-            //     type: "input",
-            //     name: "installQ",
-            //     message: askInstall()
-            //     // message: `What are the steps required to install your project?
-            //     // Provide step-by-step instructions of how to get the development environment running.`
-            // },
             {
                 type: "input",
                 name: "usageQ",
                 message: `Provide instructions and examples for use. Include screenshots as needed.
-            (Hint: Use this syntax \"![alt text](assets/images/screenshot.png)\" to add an image.)`
+(Hint: Use this syntax \"![alt text](assets/images/screenshot.png)\" to add an image.)`
             },
             {
                 type: "input",
                 name: "contributionQ",
                 message: `How would you like to ask other developers to contribute?
-            (Hint: Use this syntax \" [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)\"
-            to add reference to Contributor Covenant.)`
+(Hint: Use this syntax \" [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)\" to add reference to Contributor Covenant.)`
             },
             {
                 type: "input",

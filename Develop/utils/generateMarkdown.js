@@ -3,29 +3,37 @@
 
 //badges here https://shields.io/category/license
 function renderLicenseBadge(licenseQ) {
-  const licenseCode = [];
-  switch (licenseQ) {
-    case "Apache license 2.0":
-      licenseCode.push("Apache2.0");
-      break;
-    case "BSD 3-clause \"New\" or \"Revised\" license":
-      licenseCode.push("BSD3");
-      break;
+  // const licenseCode = [];
+  if (licenseQ !== "none (no license)") {
+    return `[!License](https://img.shields.io/badge/license-${licenseQ}-blue)`
+  } else {
+    return "";
   }
-  return licenseCode[0];
-  // const badge = {
-  //   apache: "Apache2.0",
-  //   bsd3: "BSD3",
-  //   mit: "MIT"
+  licenseQ !== "none (no license)" ? licenseCode.push(licenseQ) : "";
+  // switch (licenseQ) {
+  //   case "Academic Free License v3.0" :
+  //     licenseCode.push("");
+  //     break;
+  //   case "Apache license 2.0":
+  //     licenseCode.push("Apache2.0");
+  //     break;
+  //   case "Artistic license 2.0":
+  //     licenseCode.push("");
+  //     break;
+  //   case "Boost Software License 1.0":
+  //     licenseCode.push("");
+  //     break;
+  //   case "BSD 2-clause \"Simplified\" license":
+  //     licenseCode.push("");
+  //     break;
+  //   case "BSD 3-clause \"New\" or \"Revised\" license":
+  //     licenseCode.push("");
+  //     break;
+  //   case "BSD 3-clause Clear license":
+  //     licenseCode.push("");
+  //     break;
   // }
-  // {
-  // "Academic Free License v3.0",
-  // "Apache2.0": "Apache license 2.0",
-  // "Artistic license 2.0",
-  // "Boost Software License 1.0",
-  // "BSD 2-clause \"Simplified\" license",
-  // BSD3: "BSD 3-clause \"New\" or \"Revised\" license",
-  // "BSD 3-clause Clear license",
+  return licenseCode[0];
   // "Creative Commons Zero v1.0 Universal",
   // "Creative Commons Attribution 4.0",
   // "Creative Commons Attribution Share Alike 4.0",
@@ -54,11 +62,19 @@ function renderLicenseBadge(licenseQ) {
 
 // TODO: Create a function that returns the license link
 // If there is no license, return an empty string
-function renderLicenseLink(license) { }
+function renderLicenseLink(licenseQ) {
+  if (licenseQ !== "none (no license)") {
+    return
+  }
+}
 
 // TODO: Create a function that returns the license section of README
 // If there is no license, return an empty string
-function renderLicenseSection(license) { }
+function renderLicenseSection(licenseQ) {
+  `
+${licenseQ}
+[!License](https://img.shields.io/badge/license-${renderLicenseBadge(licenseQ)}-blue)()`
+}
 
 // gets each step separately
 function getInstallSteps(installList) {
@@ -120,9 +136,7 @@ function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, contribution
 
 
 ## License
-
-  ${licenseQ}
-  ${renderLicenseBadge(licenseQ)}
+  ${renderLicenseSection()}
 `
 }
 

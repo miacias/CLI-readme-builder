@@ -15,7 +15,7 @@
 
 ## Installation
   
-blob
+a
 
 
 
@@ -35,11 +35,9 @@ blob
 
 
 ## Contact
-  - creator: [a](https://github.com/a)
+  - creator's GitHub: [a](https://github.com/a)
   - email: [a](mailto:a)
 
 
 ## License
-
-  Apache license 2.0
-  Apache2.0
+  undefined
