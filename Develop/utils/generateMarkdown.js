@@ -1,9 +1,8 @@
 // returns a license badge or an empty string
-//badges here https://shields.io/category/license
 function renderLicenseBadge(licenseQ) {
-  // const licenseCode = [];
   if (licenseQ !== "none (no license)") {
     let licenseBadge = licenseQ.split(" ").join("_");
+    //badges here https://shields.io/category/license
     return `![License](https://img.shields.io/badge/license-${licenseBadge}-blue?logo=github)`
   } else {
     return "";
@@ -13,8 +12,8 @@ function renderLicenseBadge(licenseQ) {
 // returns a license link or an empty string
 function renderLicenseLink(licenseQ, usernameQ, titleQ) {
   if (licenseQ !== "none (no license)") {
-    titleQ.split(" ").join("-");
-    return `(https://github.com/${usernameQ}/${titleQ}/blob/main/LICENSE)`
+    let titleHyphens = titleQ.split(" ").join("-");
+    return `(https://github.com/${usernameQ}/${titleHyphens}/blob/main/LICENSE)`
   } else {
     return "";
   }
