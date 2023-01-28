@@ -60,40 +60,25 @@ function renderLicenseLink(license) {}
 // If there is no license, return an empty string
 function renderLicenseSection(license) {}
 
-// TODO: Create a function to generate markdown for README
-function parse(installList) {
+// gets each step separately
+function getInstallSteps(installList) {
+  let listItem = `\n`
+  // opens the array of list items and exposes the objects within
   for (const object in installList) {
     const stepObject = installList[object]
+    // opens the object and extracts the string value within
     for (const step in stepObject) {
       const stepValue = stepObject[step]
       console.log(stepValue)
-      console.log(JSON.stringify(stepValue))
+      listItem += `${stepValue}\n`
     }
-    // if(installList.hasOwnProperty(listName)) {
-    //   let listValue = installList[listName];
-    //   console.log(JSON.stringify(listValue))
-    // }
   }
-  // installList.forEach(element => {
-  //   JSON.stringify(element)
-  //   console.log(JSON.stringify(element))
-  // });
-  // let index = 0;
-  installArr = [];
-  // for (let i = 0; i < installList.length; i++) {
-    
-  //   index++
-    // console.log(index)
-    // console.log(i)
-    // console.log(typeof (installList[i].step-[index]))
-    // console.log(JSON.stringify(installList[i].step-[index]))
-    // console.log(JSON.stringify(installList[i]))
-
-    // installArr.push(JSON.stringify(installList[i].step-[index]))
-
-  // }
-  return installArr;
+  return listItem;
 }
+
+/*
+ make a function that 
+*/
 
 function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, contributionQ, testsQ, usernameQ, emailQ }, installList) {
   return `# ${titleQ}
@@ -112,9 +97,7 @@ function generateMarkdown({ licenseQ, titleQ, descriptionQ, usageQ, contribution
   - [License](#license)
 
 ## Installation
-
-  ${installList}
-  ${parse(installList)}
+  ${getInstallSteps(installList)}
 
 
 ## Usage

@@ -15,8 +15,10 @@
 
 ## Installation
 
-  [object Object],[object Object]
   
+one
+two
+
 
 
 ## Usage
