@@ -3,7 +3,7 @@ const inquirer = require("inquirer");
 const fs = require("fs/promises");
 const generateMarkdown = require("./utils/generateMarkdown.js");
 const installList = [];
-const usageList = [];
+// const usageList = [];
 let index = 0;
 
 // starting message
@@ -92,6 +92,7 @@ function askInstall() {
 
 // user writes instructions for use and provides screenshots
 function writeUsage() {
+    const usageList = [];
     inquirer
         .prompt([
             {
@@ -108,15 +109,15 @@ function writeUsage() {
             }
         ])
         .then(usageBlock => {
-            console.log(usageBlock)
+            // console.log(usageBlock)
             usageList.push(usageBlock);
-            console.log(usageList)
-            collectResponses();
+            // console.log(usageList)
+            collectResponses(usageList);
         })
 }
 
 // user completes the rest of the prompt questions
-function collectResponses() {
+function collectResponses(usageList) {
     inquirer
         .prompt([
             {
@@ -202,8 +203,7 @@ function collectResponses() {
             }
         ])
         .then((answers) => {
-            // console.log(answers)
-            const newReadme = generateMarkdown(answers, installList);
+            const newReadme = generateMarkdown(answers, installList, usageList);
             writeToFile(newReadme)
         })
         .catch((error) => {
