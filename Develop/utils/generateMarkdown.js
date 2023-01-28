@@ -51,23 +51,13 @@ function getUsage(usageList) {
   let usageItem = `\n`
   const usageIfo = usageList[0]
   const {usageQ, usageImgQ} = usageIfo
-  usageItem += `${usageQ}\n${usageImgQ}`
-  // opens the array and exposes the object within
-  // for (const object in usageList) {
-  //   const usageInfo = usageList[object]
-  //   console.log(usageInfo)
-  //   // opens the object and extracts each string
-  //   for (const string in usageInfo) {
-  //     const usage = usageInfo[string]
-  //     usageItem += `${usage}\n`
-  //   }
-  // }
-  // const usage = usageInfo[usageQ]
-
-  // console.log(usageItem)
+  // pushes each string from the object into usageItem template literal
+  usageItem += `${usageQ}\n
+${usageImgQ}`
   return usageItem;
 }
 
+// uses a template literal to import all variables into a README.md format
 function generateMarkdown({ licenseQ, titleQ, descriptionQ, contributionQ, testsQ, usernameQ, emailQ }, installList, usageList) {
   return `# ${titleQ}
 
@@ -113,4 +103,5 @@ function generateMarkdown({ licenseQ, titleQ, descriptionQ, contributionQ, tests
 `
 }
 
+// exports the README.md formatted data to index.js
 module.exports = generateMarkdown;

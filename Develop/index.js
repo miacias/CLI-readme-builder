@@ -1,9 +1,10 @@
-// includes packages needed - https://www.npmjs.com/package/inquirer/v/8.2.4
+// imports packages and functions needed
 const inquirer = require("inquirer");
 const fs = require("fs/promises");
 const generateMarkdown = require("./utils/generateMarkdown.js");
+
+// global variables not held locally due to using recursion instead of a loop in function writeInstall()
 const installList = [];
-// const usageList = [];
 let index = 0;
 
 // starting message
@@ -25,9 +26,9 @@ function askReady() {
         })
         .catch((error) => {
             if (error.isTtyError) {
-                // Prompt couldn't be rendered in the current environment
+                console.log("Prompt couldn't be rendered in the current environment");
             } else {
-                // Something else went wrong
+                console.log("Something went wrong");
             }
         });
 }
@@ -57,6 +58,7 @@ function writeInstall() {
                     }
                 ])
                 .then(installAddStep => {
+                    // uses recursion to add a step and increment index OR moves forward to new prompts
                     installAddStep.continue ? writeInstall() : writeUsage()
                 })
         });
@@ -84,6 +86,7 @@ function askInstall() {
                     }
                 ])
                 .then(installBlock => {
+                    // pushes answers into a globally-scoped array for later use
                     installList.push(installBlock)
                     writeUsage()
                 })
@@ -109,9 +112,8 @@ function writeUsage() {
             }
         ])
         .then(usageBlock => {
-            // console.log(usageBlock)
+            // pushes answers into an array to be threaded into the next function for later use
             usageList.push(usageBlock);
-            // console.log(usageList)
             collectResponses(usageList);
         })
 }
@@ -174,12 +176,6 @@ function collectResponses(usageList) {
                 message: `How would you describe this project?
 (Hint: your motivation, why create this, solving which problem(s), things learned)`
             },
-//             {
-//                 type: "input",
-//                 name: "usageQ",
-//                 message: `Provide instructions and examples for use. Include screenshots as needed.
-// (Hint: Use this syntax \"![alt text](assets/images/screenshot.png)\" to add an image.)`
-//             },
             {
                 type: "input",
                 name: "contributionQ",
@@ -208,24 +204,19 @@ function collectResponses(usageList) {
         })
         .catch((error) => {
             if (error.isTtyError) {
-                // Prompt couldn't be rendered in the current environment
+                console.log("Prompt couldn't be rendered in the current environment");
             } else {
-                // Something else went wrong
+                console.log("Something went wrong");
             }
         });
 }
 
-// writes README file
+// saves completed README file to root directory
 function writeToFile(newReadme) {
     fs.writeFile("../new-README.md", newReadme)
         .then(() => console.log("README saved!"))
         .catch(error => `An error occurred: ${error}`);
 }
 
-// lists app function(s) on initialization
-function init() {
-    askReady();
-}
-
-// initializes app
-init();
+// initializes CLI README builder app
+askReady();
