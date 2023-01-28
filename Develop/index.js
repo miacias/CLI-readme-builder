@@ -1,58 +1,9 @@
 // includes packages needed - https://www.npmjs.com/package/inquirer/v/8.2.4
 const inquirer = require("inquirer");
 const fs = require("fs/promises");
+const generateMarkdown = require("./utils/generateMarkdown.js")
 const installList = [];
 let index = 0;
-
-/* the unnamed object is the same as object destructuring "const { variableNames } = objectName" 
-because generateReadme() is being called with answers passed into it */
-function generateReadme({ licenseQ, titleQ, descriptionQ, usageQ, contributionQ, testsQ, usernameQ, emailQ }, installList) {
-    return `
-# ${titleQ}
-
-## Description
-
-    ${descriptionQ}
-
-
-## Table of Contents
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contribution](#contribution)
-- [Tests](#tests)
-- [Contact](#contact)
-- [License](#license)
-
-## Installation
-
-    ${installList}
-
-
-## Usage
-
-    ${usageQ}
-
-
-## Contribution
-
-    ${contributionQ}
-
-
-## Tests
-
-    ${testsQ}
-
-
-## Contact
-- creator: [${usernameQ}](https://github.com/${usernameQ})
-- email: [${emailQ}](mailto:${emailQ})
-
-
-## License
-
-    ${licenseQ}
-    `
-}
 
 console.log('Hi, welcome to your CLI README Builder via Node.js!');
 
@@ -109,7 +60,6 @@ function writeInstall() {
 }
 
 function askInstall() {
-    // const installationSteps = [];
     inquirer
         .prompt([
             {
@@ -135,12 +85,6 @@ function askInstall() {
                     writeToFile(newReadme)
                     // return installBlock
                 })
-                // example below
-                // .then((answers) => {
-                //     // console.log(answers)
-                //     const newReadme = generateReadme(answers, installList);
-                //     writeToFile(newReadme)
-                // })
         })
 }
 
@@ -159,7 +103,6 @@ function collectResponses() {
                     "BSD 2-clause \"Simplified\" license",
                     "BSD 3-clause \"New\" or \"Revised\" license",
                     "BSD 3-clause Clear license",
-                    "Creative Commons license family",
                     "Creative Commons Zero v1.0 Universal",
                     "Creative Commons Attribution 4.0",
                     "Creative Commons Attribution Share Alike 4.0",
@@ -168,7 +111,6 @@ function collectResponses() {
                     "Eclipse Public License 1.0",
                     "Eclipse Public License 2.0",
                     "European Union Public License 1.1",
-                    "GNU General Public License family",
                     "GNU General Public License v2.0",
                     "GNU General Public License v3.0",
                     "GNU Lesser General Public License v2.1",
@@ -240,7 +182,7 @@ function collectResponses() {
         ])
         .then((answers) => {
             // console.log(answers)
-            const newReadme = generateReadme(answers, installList);
+            const newReadme = generateMarkdown(answers, installList);
             writeToFile(newReadme)
         })
         .catch((error) => {
@@ -252,13 +194,6 @@ function collectResponses() {
         });
 }
 
-
-// const getStartedQ = "Ready to begin building your README?";
-// const optContributionQ = `Optional: Do you want to include open source contributions code of conduct?`;
-// const optEmailQ = `Optional: Do you want to include your contact email address?`;
-// const optTestsQ = `Optional: Do you want to include how to test your code?`;
-
-
 // writes README file
 function writeToFile(newReadme) {
     fs.writeFile("README.md", newReadme)
@@ -269,41 +204,7 @@ function writeToFile(newReadme) {
 // TODO: Create a function to initialize app
 function init() {
     askReady();
-    // askInstall()
 }
 
 // Function call to initialize app
 init();
-
-/*
-User Story
-
-AS A developer
-I WANT a README generator
-SO THAT I can quickly create a professional README for a new project
-
-Acceptance Criteria
-
-GIVEN a command-line application that accepts user input
-
-WHEN I am prompted for information about my application repository
-THEN a high-quality, professional README.md is generated with the title of my project and sections entitled Description, Table of Contents, Installation, Usage, License, Contributing, Tests, and Questions
-
-WHEN I enter my project title
-THEN this is displayed as the title of the README
-
-WHEN I enter a description, installation instructions, usage information, contribution guidelines, and test instructions
-THEN this information is added to the sections of the README entitled Description, Installation, Usage, Contributing, and Tests
-
-WHEN I choose a license for my application from a list of options
-THEN a badge for that license is added near the top of the README and a notice is added to the section of the README entitled License that explains which license the application is covered under
-
-WHEN I enter my GitHub username
-THEN this is added to the section of the README entitled Questions, with a link to my GitHub profile
-
-WHEN I enter my email address
-THEN this is added to the section of the README entitled Questions, with instructions on how to reach me with additional questions
-
-WHEN I click on the links in the Table of Contents
-THEN I am taken to the corresponding section of the README
-*/
