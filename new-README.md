@@ -2,7 +2,7 @@
 
 ## Description
 
-    This repo needed to be made because it is super cool.
+This repo needed to be made because it is super cool.
 
 
 ## Table of Contents
