@@ -25,6 +25,8 @@ To run this interface on your machine, please clone this repository locally to y
   
 After initializing with ```node index.js```, a series of prompts will guide you through. Be sure to respond to each prompt until you receive the notification that your README has been saved!
 
+[See a demonstration of how it works here!](https://youtu.be/2oPjRl2Vbq4)
+
 
 ## Contribution
 
