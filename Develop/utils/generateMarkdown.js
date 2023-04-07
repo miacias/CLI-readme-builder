@@ -73,6 +73,7 @@ ${descriptionQ}
 - [Contribution](#contribution)
 - [Tests](#tests)
 - [Contact](#contact)
+- [Credits](#credits)
 - [License](#license)
 
 ## Installation
