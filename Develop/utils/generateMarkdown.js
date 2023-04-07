@@ -63,43 +63,67 @@ function generateMarkdown({ licenseQ, titleQ, descriptionQ, contributionQ, tests
 
 ## Description
 
-  ${descriptionQ}
+${descriptionQ}
 
 
 ## Table of Contents
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Contribution](#contribution)
-  - [Tests](#tests)
-  - [Contact](#contact)
-  - [License](#license)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Roadmap](#roadmap)
+- [Contribution](#contribution)
+- [Tests](#tests)
+- [Contact](#contact)
+- [License](#license)
 
 ## Installation
-  ${getInstallSteps(installList)}
+${getInstallSteps(installList)}
 
 
 ## Usage
 
-  ${getUsage(usageList)}
+${getUsage(usageList)}
 
+## Roadmap
 
 ## Contribution
 
-  ${contributionQ}
+${contributionQ}
 
 
 ## Tests
 
-  ${testsQ}
+${testsQ}
 
 
 ## Contact
-  - creator: [${usernameQ}](https://github.com/${usernameQ})
-  - email: [${emailQ}](mailto:${emailQ})
+- creator: [${usernameQ}](https://github.com/${usernameQ})
+- email: [${emailQ}](mailto:${emailQ})
 
+## Credits
+
+Documentation referenced:
+
+- Mozilla Developer Network (MDN)
+- Stack Overflow Forums
+- W3 Schools
+
+Tools used:
+
+- [VS Code](https://code.visualstudio.com/)
+- [Node.js](https://nodejs.org/en/)
+
+U. Penn Bootcamp instructor(s): 
+
+- [Dan Gross](https://github.com/DanielWGross)
+- [Andrew Hojnowski](https://github.com/aHojo)
+- [C. Ross King](https://github.com/RomeoKilo125/)
+
+Tutor(s): N/A
+
+Artist(s): N/A
 
 ## License
-  ${renderLicenseSection(licenseQ, usernameQ, titleQ)}
+${renderLicenseSection(licenseQ, usernameQ, titleQ)}
 `
 }
 
